@@ -17,9 +17,6 @@ public class ReportingStructureImpl implements ReportingStructureService {
 
     private static final Logger LOG = LoggerFactory.getLogger(ReportingStructureImpl.class);
 
-//    @Autowired
-//    private ReportingStructureRepository reportingStructureRepository;
-
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -29,7 +26,6 @@ public class ReportingStructureImpl implements ReportingStructureService {
 
         Employee currEmployee = employeeRepository.findByEmployeeId(id);
 
-//        Employee employee = employeeService.read(id);
         if (currEmployee == null) {
             throw new RuntimeException("Invalid employeeId: " + id);
         }
