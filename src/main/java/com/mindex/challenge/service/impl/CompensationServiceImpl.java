@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -26,21 +27,25 @@ public class CompensationServiceImpl implements CompensationService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+
+    private void throwInvalidEmployeeIdException(String employeeId) {
+        throw new RuntimeException("Invalid employeeId: " + employeeId);
+
+    }
+
     @Override
     public Compensation create(Compensation compensation) {
         String employeeId = compensation.getEmployee().getEmployeeId();
         LOG.debug("Creating compensation for employee [{}]", employeeId);
 
         Employee employee = employeeRepository.findByEmployeeId(employeeId);
+        if (employee == null) {
+            throwInvalidEmployeeIdException(employeeId);
+        }
 
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
-//        String effectiveDate = "04/02/2022";
-//        compensation.setEffectiveDate(effectiveDate);
         compensation.setCompensationId(UUID.randomUUID().toString());
 
         compensation.setEmployee(employee);
-        LOG.debug("Employeeeeeee: "+employee.getFirstName() + employee.getEmployeeId());
-        LOG.debug("COmpensationnnnnnnn: "+compensation.getEmployee().getEmployeeId() + compensation.getEmployee().getFirstName()+compensation.getSalary());
         compensationRepository.insert(compensation);
 
         return compensation;
@@ -52,8 +57,8 @@ public class CompensationServiceImpl implements CompensationService {
 
         Employee employee = employeeRepository.findByEmployeeId(employeeId);
         Compensation compensation = compensationRepository.findByEmployee(employee);
-        if (compensation == null) {
-            throw new RuntimeException("Invalid employeeId provided: " + employeeId);
+        if (employee == null) {
+            throwInvalidEmployeeIdException(employeeId);
         }
 
         return compensation;
