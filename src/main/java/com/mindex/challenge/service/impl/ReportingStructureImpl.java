@@ -21,6 +21,10 @@ public class ReportingStructureImpl implements ReportingStructureService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    public ReportingStructureImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
     /**
      *
      * @param id - the employee id whose ReportingStructure is being queried
