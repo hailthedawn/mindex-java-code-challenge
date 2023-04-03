@@ -19,6 +19,10 @@ public class Compensation {
         this.compensationId = compensationId;
     }
 
+    public String getCompensationId() {
+        return compensationId;
+    }
+
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }

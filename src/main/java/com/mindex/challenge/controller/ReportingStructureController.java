@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,14 +26,13 @@ public class ReportingStructureController {
         return reportingStructureService.read(id);
     }
 
-    @ExceptionHandler(RuntimeException.class)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleRuntimeErrorException(
-            RuntimeException exception
-    ) {
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+//        , HttpHeaders headers, HttpStatus status, WebRequest request
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(exception.getMessage());
+                .body(ex.getMessage());
     }
 
 }
