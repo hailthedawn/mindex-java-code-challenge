@@ -1,8 +1,8 @@
 package com.mindex.challenge.data;
 
 public class ReportingStructure {
-    private Employee employee;
-    private int numberOfReports;
+    private final Employee employee;
+    private final int numberOfReports;
 
     public ReportingStructure(Employee employee, int numberOfReports) {
         this.employee = employee;
@@ -12,9 +12,4 @@ public class ReportingStructure {
     public int getDirectReports() {
         return numberOfReports;
     }
-
-//    * READ
-//    * HTTP Method: GET
-//    * URL: localhost:8080/reporting-structure/{id}
-//    * RESPONSE: ReportingStructure
 }

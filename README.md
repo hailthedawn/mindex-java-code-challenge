@@ -10,6 +10,7 @@ The application may be executed by running `gradlew bootRun`.
 
 ### How to Use
 The following endpoints are available to use:
+Employee:
 ```
 * CREATE
     * HTTP Method: POST 
@@ -26,6 +27,32 @@ The following endpoints are available to use:
     * PAYLOAD: Employee
     * RESPONSE: Employee
 ```
+**Note: The following endpoints were created by the owner of this repository as part of the interview challenge.**
+
+**Compensation**:
+```
+* CREATE
+    * HTTP Method: POST 
+    * URL: localhost:8080/employee/{id}/compensation
+    * URL PARAMETER: id (employee id)
+    * PAYLOAD: Compensation
+    * RESPONSE: Compensation
+* READ
+    * HTTP Method: GET 
+    * URL: localhost:8080/employee/{id}/compensation
+    * URL PARAMETER: id (employee id)
+    * RESPONSE: Compensation
+```
+
+**Reporting Structure:**
+```
+* READ
+    * HTTP Method: GET 
+    * URL: localhost:8080/employee/{id}/reporting-structure
+    * URL PARAMETER: id (employee id)
+    * RESPONSE: ReportingStructure
+```
+
 The Employee has a JSON schema of:
 ```json
 {
@@ -53,6 +80,61 @@ The Employee has a JSON schema of:
   }
 }
 ```
+
+The Compensation has a JSON schema of:
+
+```json
+{
+  "type": "Compensation",
+  "properties": {
+    "compensationId": {
+      "type": "string"
+    },
+    "employee": {
+      "type": "Employee"
+    },
+    "salary": {
+      "type": "double"
+    },
+    "effectiveDate": {
+      "type": "LocalDate (or JsonFormat \"MM/dd/yyyy\")"
+    }
+  }
+}
+```
+
+**Sample Usage:**
+```
+curl -X POST \
+  http://localhost:8080/employee/16a596ae-edd3-4847-99fe-c4518e82c86f/compensation \
+  -H 'Content-Type: application/json' 
+  -d '{
+"effectiveDate": "09/18/2023",
+"salary": 724000
+}'
+```
+
+The ReportingStructure has a JSON schema of:
+```json
+{
+  "type": "ReportingStructure",
+  "properties": {
+    "employee": {
+      "type": "Employee"
+    },
+    "numberOfReports": {
+      "type": "int"
+    }
+  }
+}
+
+```
+**Sample Usage:**
+```
+curl -X GET \
+  http://localhost:8080/employee/16a596ae-edd3-4847-99fe-c4518e82c86f/reporting-structure
+```
+
 For all endpoints that require an "id" in the URL, this is the "employeeId" field.
 
 ## What to Implement
