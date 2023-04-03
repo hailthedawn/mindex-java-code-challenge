@@ -1,14 +1,15 @@
 package com.mindex.challenge.controller;
 
 import com.mindex.challenge.data.ReportingStructure;
+import com.mindex.challenge.exception.InvalidEmployeeIDException;
 import com.mindex.challenge.service.ReportingStructureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 public class ReportingStructureController {
@@ -25,14 +26,13 @@ public class ReportingStructureController {
 
         return reportingStructureService.read(id);
     }
-
-    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ExceptionHandler(InvalidEmployeeIDException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
-//        , HttpHeaders headers, HttpStatus status, WebRequest request
+    public ResponseEntity<String> handleInvalidEmployeeIdException(
+            InvalidEmployeeIDException exception
+    ) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
+                .body(exception.getMessage());
     }
-
 }

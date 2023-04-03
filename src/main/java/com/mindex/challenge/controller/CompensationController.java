@@ -49,13 +49,4 @@ public class CompensationController {
                 .body(exception.getMessage());
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
-//        , HttpHeaders headers, HttpStatus status, WebRequest request
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ex.getMessage());
-    }
-
 }
