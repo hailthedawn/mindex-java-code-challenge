@@ -67,7 +67,7 @@ public class CompensationServiceImpl implements CompensationService {
      */
     @Override
     public Compensation read(String employeeId) {
-        LOG.debug("Showing compensatioIn for employee with id [{}]", employeeId);
+        LOG.debug("Showing compensation for employee with id [{}]", employeeId);
         Employee employee = employeeRepository.findByEmployeeId(employeeId);
         if (employee == null) {
             throwInvalidEmployeeIdException(employeeId);
